@@ -6,13 +6,40 @@ public class Test {
 	private static Random random = new Random();
 	
 	public static void main(String[] args) {
-		Board board = new Board();
+		DiceBag myDiceBag = new DiceBag();
+		//myDiceBag.toggleVerbose();
+		
+		System.out.println("Quick Roll = " + myDiceBag.qRoll(3, 6, 2));
+		System.out.println("--------------------------\n");
+				
+		myDiceBag.addDice(2, 6, 1);
+		myDiceBag.addDice(1, 20, -2);
+		System.out.println("Custom Roll = " + myDiceBag.rollDice());
+		System.out.println("--------------------------\n");
+
+		
+		System.out.println("Quick Roll II = " + myDiceBag.qRoll(1, 20, 5));
+		System.out.println("--------------------------\n");
+		
+		myDiceBag.emptyDice();
+		myDiceBag.addDice(2, 4, -1);
+		myDiceBag.addDice(1, 8, 3);
+		System.out.println("Custom Roll II = " + myDiceBag.rollDice());
+		System.out.println("--------------------------\n");
+		
+		myDiceBag.emptyDice();
+		System.out.println("Empty Roll = " + myDiceBag.rollDice());
+		System.out.println("--------------------------\n");
+		
+			
+		/*Board board = new Board();
 		
 		for (int i = 0; i < 3; i++) {
 			board.addOrganisation(new Organisation(random.nextInt(3) + 4));
 		}
 		
 		board.print();
+		*/
 	}
 }
  

@@ -23,7 +23,7 @@ public class Board {
 	public void print() {
 		for (Organisation o : organisations.getAll()) {
 			o.print();
-			System.out.println();
+			System.out.println("\n");
 		}
 	}
 }

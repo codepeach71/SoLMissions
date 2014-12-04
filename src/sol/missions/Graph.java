@@ -26,7 +26,15 @@ public class Graph<T> {
 		nodes.add(new Node(data));
 	}
 	
-	public void addConnection(Node<T> nodeA, Node<T> nodeB) {
+	// this throws away duplicate connections
+	public void addConnection(Node<T> nodeA, Node<T> nodeB) {		
+		
+		for (Edge e : edges) {
+			Set<Node<T>> pair = e.getNodes();
+			if (pair.contains(nodeA) && pair.contains(nodeB)) {
+				return;
+			}
+		}
 		edges.add(new Edge(nodeA, nodeB));
 	}
 	

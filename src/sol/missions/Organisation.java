@@ -16,10 +16,11 @@ public class Organisation {
 	private int strength;
 	private static Random random = new Random();
 	
-	private final String[] names = { "Globex Corporation", "Ram Co." };
+	private final String[] firstNames = { "Ram", "Gruzzle", "Basement", "Dumptrucks" };
+	private final String[] lastNames = { "Corporation", "Corp.", "Incorporated", "Inc.", "R US", "of India" };
 	
 	public Organisation(int size) {
-		name = names[random.nextInt(names.length)];
+		name = firstNames[random.nextInt(firstNames.length)] + " " + lastNames[random.nextInt(lastNames.length)];
 		type = organisationType.NORMAL;
 		modifiers = new RollModifier();
 		strength = random.nextInt(5) + 1;
@@ -38,9 +39,9 @@ public class Organisation {
 		
 		List<Person> personList = people.getAll();
 		for (Person p : personList) {
-			int connections = random.nextInt(4);
+			int connections = random.nextInt(3);
 			
-			for (int i = 0; i < connections; i++) {				
+			for (int i = 0; i < connections; i++) {			
 				int neighbourIndex = personList.indexOf(p);
 				while (neighbourIndex == personList.indexOf(p) || people.directlyConnected(p, personList.get(neighbourIndex))) {
 					neighbourIndex = random.nextInt(personList.size());					
@@ -48,6 +49,12 @@ public class Organisation {
 				
 				people.addConnection(people.getNode(p), people.getNode(personList.get(neighbourIndex)));
 			}
+		}
+	}
+	
+	public void update() {
+		for (Person p : people.getAll()) {
+			p.update();
 		}
 	}
 	

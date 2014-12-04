@@ -49,6 +49,10 @@ public class Person {
 		miscInfo.put("lastName", lastNames[random.nextInt(lastNames.length)]);
 	}
 	
+	public void update() {
+		
+	}
+	
 	public String getName() {
 		return String.format("%s %s", miscInfo.get("firstName"), miscInfo.get("lastName"));
 	}

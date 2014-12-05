@@ -6,6 +6,10 @@ public class Test {
 	private static Random random = new Random();
 	
 	public static void main(String[] args) {
+		testMods();
+	}
+	
+	public static void testRolls(){
 		DiceBag myDiceBag = new DiceBag();
 		myDiceBag.toggleVerbose(true);
 		
@@ -18,7 +22,7 @@ public class Test {
 		System.out.println("--------------------------\n");
 
 		
-		System.out.println("Quick Roll II = " + myDiceBag.qRoll(1, 20, 5));
+		System.out.println("Quick Roll II = " + myDiceBag.qRoll(1, 20, 5, true));
 		System.out.println("--------------------------\n");
 		
 		myDiceBag.emptyDice();
@@ -30,16 +34,18 @@ public class Test {
 		myDiceBag.emptyDice();
 		System.out.println("Empty Roll = " + myDiceBag.rollDice());
 		System.out.println("--------------------------\n");
-		
-			
-		/*Board board = new Board();
-		
+	}
+	
+	public static void testMods(){
+		RollModifier rm = new RollModifier();
+	}
+	
+	public static void testBoard(){
+		Board board = new Board();
 		for (int i = 0; i < 3; i++) {
 			board.addOrganisation(new Organisation(random.nextInt(3) + 4));
 		}
-		
 		board.print();
-		*/
 	}
 }
  

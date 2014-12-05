@@ -15,11 +15,15 @@ public class DiceBag {
 	
 	/* Quick Roll */
 	public static int qRoll(int numOfDice, int numOfSides, int modifier){ //Quick Roll xDy+z
+		return qRoll(numOfDice, numOfSides, modifier, false);
+	}
+	public static int qRoll(int numOfDice, int numOfSides, int modifier, boolean verbose){ //Quick Roll xDy+z
 		int diceTotal = 0;		
-		
-		List<Dice> qDiceList = new ArrayList<Dice>();		
+		List<Dice> qDiceList = new ArrayList<Dice>();
+		DiceBag tempBag = new DiceBag();
+		if (verbose) { tempBag.toggleVerbose(true); }
 		for(int i = 0; i < numOfDice; i++){
-			qDiceList.add(new DiceBag().new Dice(numOfSides, modifier));
+			qDiceList.add(tempBag.new Dice(numOfSides, modifier));
 		}
 		for (Dice dice : qDiceList){
 			diceTotal += dice.roll();
@@ -27,19 +31,19 @@ public class DiceBag {
 		return diceTotal;
 	}
 	
-	/*Add Dice*/
+	/* Add Dice */
 	public void addDice(int numOfDice, int numOfSides, int modifier){
 		for(int i = 0; i < numOfDice; i++){
 			diceList.add(new Dice (numOfSides, modifier));
 		}
 	}
 	
-	/*Empty Bag*/
+	/* Empty Bag */
 	public void emptyDice(){
 		diceList.clear();
 	}
 	
-	/*Roll Bag*/
+	/* Roll Bag */
 	public int rollDice(){
 		int diceTotal = 0;
 		for (Dice dice : diceList){
@@ -48,7 +52,7 @@ public class DiceBag {
 		return diceTotal;
 	}
 	
-	/*Toggle Verbose*/
+	/* Toggle Verbose */
 	public void toggleVerbose(){
 		isVerbose = !isVerbose;
 	}
@@ -56,7 +60,7 @@ public class DiceBag {
 		isVerbose = switchVerbose;
 	}
 	
-	/*Dice Class*/
+	/* Dice Class */
 	private class Dice {
 		private int sides, mod;
 		

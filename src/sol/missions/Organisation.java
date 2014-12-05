@@ -73,7 +73,7 @@ public class Organisation {
 		for (Person p : people.getAll()) {
 			String outputString = p.getName() + " has ";
 
-			List<Person> neighbours = people.getNeighboursFromData(p);
+			List<Person> neighbours = people.getNeighbours(p);
 
 			outputString += "connections to: ";
 			for (Person neighbour : neighbours) {

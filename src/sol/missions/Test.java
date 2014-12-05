@@ -7,7 +7,7 @@ public class Test {
 	
 	public static void main(String[] args) {
 		DiceBag myDiceBag = new DiceBag();
-		//myDiceBag.toggleVerbose();
+		myDiceBag.toggleVerbose(true);
 		
 		System.out.println("Quick Roll = " + myDiceBag.qRoll(3, 6, 2));
 		System.out.println("--------------------------\n");

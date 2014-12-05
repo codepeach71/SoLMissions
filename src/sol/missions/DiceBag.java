@@ -14,12 +14,12 @@ public class DiceBag {
 	}
 	
 	/* Quick Roll */
-	public int qRoll(int numOfDice, int numOfSides, int modifier){ //Quick Roll xDy+z
-		List<Dice> qDiceList = new ArrayList<Dice>();
-		int diceTotal = 0;
-		qDiceList.clear();
-		for(int i = 1; i <= numOfDice; i++){
-			qDiceList.add(new Dice(numOfSides, modifier));
+	public static int qRoll(int numOfDice, int numOfSides, int modifier){ //Quick Roll xDy+z
+		int diceTotal = 0;		
+		
+		List<Dice> qDiceList = new ArrayList<Dice>();		
+		for(int i = 0; i < numOfDice; i++){
+			qDiceList.add(new DiceBag().new Dice(numOfSides, modifier));
 		}
 		for (Dice dice : qDiceList){
 			diceTotal += dice.roll();
@@ -29,7 +29,7 @@ public class DiceBag {
 	
 	/*Add Dice*/
 	public void addDice(int numOfDice, int numOfSides, int modifier){
-		for(int i = 1; i<= numOfDice; i++){
+		for(int i = 0; i < numOfDice; i++){
 			diceList.add(new Dice (numOfSides, modifier));
 		}
 	}
@@ -53,8 +53,7 @@ public class DiceBag {
 		isVerbose = !isVerbose;
 	}
 	public void toggleVerbose(boolean switchVerbose){
-		if (switchVerbose == false) { isVerbose = false; }
-		else { isVerbose = true; }
+		isVerbose = switchVerbose;
 	}
 	
 	/*Dice Class*/
@@ -68,7 +67,7 @@ public class DiceBag {
 		
 		public int roll(){
 			int rollResult =  random.nextInt(sides) + 1;
-			if (DiceBag.this.isVerbose==true) { System.out.println("Rolled: " + rollResult + "\nMod: " + mod + "\nTotal: " + (rollResult + mod) + "\n");}
+			if (DiceBag.this.isVerbose) { System.out.println("Rolled: " + rollResult + "\nMod: " + mod + "\nTotal: " + (rollResult + mod) + "\n");}
 			return rollResult + mod;
 		}
 	}

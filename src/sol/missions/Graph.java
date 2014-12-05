@@ -23,7 +23,7 @@ public class Graph<T> {
 	}
 	
 	public void add(T data) {
-		nodes.add(new Node(data));
+		nodes.add(new Node<T>(data));
 	}
 	
 	// this throws away duplicate connections
@@ -70,7 +70,7 @@ public class Graph<T> {
 	}
 	
 	public boolean directlyConnected(T dataA, T dataB) {
-		return directlyConnected(new Node(dataA), new Node(dataB));
+		return directlyConnected(new Node<T>(dataA), new Node<T>(dataB));
 	}
 	
 	public Node<T> getNode(T data) { 
@@ -102,7 +102,7 @@ public class Graph<T> {
 		return neighbours;
 	}
 	
-	public List<T> getNeighboursFromData(T data) {
+	public List<T> getNeighbours(T data) {
 		return getNeighbours(new Node<T>(data));
 	}
 		

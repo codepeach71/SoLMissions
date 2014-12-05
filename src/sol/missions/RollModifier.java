@@ -103,7 +103,7 @@ public class RollModifier {
 		modMap.put("publicPerception", modMap.get("publicPerception") + x);
 	}
 	
-	
+	/* Add 2 RollModifiers */
 	public void addModList(RollModifier newMods){
 		modMap.put("generic", modMap.get("generic") + newMods.getGeneric());
 		modMap.put("manipulation", modMap.get("manipulation") + newMods.getManipulation());

@@ -37,7 +37,15 @@ public class Test {
 	}
 	
 	public static void testMods(){
-		RollModifier rm = new RollModifier();
+		int[] x = {1,2,3};
+		RollModifier rm;
+		RollModifier rm2;
+		rm = new RollModifier(new int[]{1,2,3,4,5,6,7});
+		rm2 = new RollModifier(new int[]{-1,-1,-1,-1,-1,-1,-1});
+		rm.addModList(rm2);
+		System.out.println(rm.getPhysicalSecurity());
+		
+		
 	}
 	
 	public static void testBoard(){

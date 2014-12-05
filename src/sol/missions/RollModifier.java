@@ -35,48 +35,48 @@ public class RollModifier {
 		}
 	}
 /* Accessors */	
-	public int getGenericMod(){
+	public int getGeneric(){
 		return modMap.get("generic");
 	}	
-	public int getManipulationMod(){
+	public int getManipulation(){
 		return modMap.get("manipulation");
 	}	
-	public int getPhysicalSecurityMod(){
+	public int getPhysicalSecurity(){
 		return modMap.get("physSec");
 	}	
-	public int getElectronicIntelMod(){
+	public int getElectronicIntel(){
 		return modMap.get("elecIntel");
 	}	
-	public int getIntelOtherMod(){
+	public int getIntelOther(){
 		return modMap.get("intelOther");
 	}
-	public int getMoralityMod(){
+	public int getMorality(){
 		return modMap.get("morality");
 	}
-	public int getPublicPerceptionMod(){
+	public int getPublicPerception(){
 		return modMap.get("publicPerception");
 	}
 	
 /* Mutators - Set */
-	public void setGenericMod(int x){
+	public void setGeneric(int x){
 		modMap.put("generic", x);
 	}
-	public void setManipulationMod(int x){
+	public void setManipulation(int x){
 		modMap.put("manipulation", x);
 	}	
-	public void setPhysicalSecurityMod(int x){
+	public void setPhysicalSecurity(int x){
 		modMap.put("physSec", x);
 	}	
-	public void setElectronicIntelMod(int x){
+	public void setElectronicIntel(int x){
 		modMap.put("elecIntel", x);
 	}	
-	public void setIntelOtherMod(int x){
+	public void setIntelOther(int x){
 		modMap.put("intelOther", x);
 	}
-	public void setMoralityMod(int x){
+	public void setMorality(int x){
 		modMap.put("morality", x);
 	}
-	public void setPublicPerceptionMod(int x){
+	public void setPublicPerception(int x){
 		modMap.put("publicPerception", x);
 	}
 	
@@ -101,6 +101,17 @@ public class RollModifier {
 	}
 	public void updatePublicPerceptionMod(int x){
 		modMap.put("publicPerception", modMap.get("publicPerception") + x);
+	}
+	
+	
+	public void addModList(RollModifier newMods){
+		modMap.put("generic", modMap.get("generic") + newMods.getGeneric());
+		modMap.put("manipulation", modMap.get("manipulation") + newMods.getManipulation());
+		modMap.put("physSec", modMap.get("physSec") + newMods.getPhysicalSecurity());
+		modMap.put("elecIntel", modMap.get("elecIntel") + newMods.getElectronicIntel());
+		modMap.put("intelOther", modMap.get("intelOther") + newMods.getIntelOther());
+		modMap.put("morality", modMap.get("morality") + newMods.getMorality());
+		modMap.put("publicPerception", modMap.get("publicPerception") + newMods.getMorality());
 	}
 	
 }

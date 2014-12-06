@@ -2,7 +2,7 @@ package sol.missions;
 
 import java.util.*;
 
-public class Person {
+public class Person implements Compromisable {
 	public enum PersonType {BASE, SECURITY, COMMUNICATIONS, HR, PR};
 	
 	private Map<String, String> miscInfo;	
@@ -15,6 +15,13 @@ public class Person {
 	private final String[] firstNamesMale = { "Brian", "Les", "Bindu", "Jeff", "Scott" };
 	private final String[] firstNamesFemale = { "Jana", "Muddy Mae", "Ozma" };	
 	private final String[] lastNames = { "Johnson", "Dobson", "Suggins", "Bean" };
+	
+	public boolean isCompromised() { return isCompromised; }
+	public void setCompromised(boolean compromised) { isCompromised = compromised; }
+	
+	public Person() {
+		generateNew(PersonType.BASE);
+	}
 	
 	public Person(PersonType type) {
 		generateNew(type);

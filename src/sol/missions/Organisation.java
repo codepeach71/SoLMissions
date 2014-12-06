@@ -6,7 +6,7 @@ import java.util.Random;
 
 import sol.missions.Person.PersonType;
 
-public class Organisation {
+public class Organisation implements Compromisable {
 	public enum organisationType { NORMAL, TElECOM, SECURITY }
 
 	private String name;
@@ -14,18 +14,26 @@ public class Organisation {
 	private organisationType type;
 	private RollModifier modifiers;
 	private int strength;
+	private boolean isCompromised;
 	private static Random random = new Random();
 
 	private final String[] firstNames = { "Ram", "Gruzzle", "Basement", "Dumptrucks", "T.R." };
 	private final String[] lastNames = { "Corporation", "Corp.", "Incorporated", "Inc.", "R US", "of India" };
+	
+	public boolean isCompromised() { return isCompromised; }
+	
 
-	public Organisation(int size) {
+	public Organisation() {
 		name = firstNames[random.nextInt(firstNames.length)] + " " + lastNames[random.nextInt(lastNames.length)];
 		type = organisationType.NORMAL;
 		modifiers = new RollModifier();
 		strength = random.nextInt(5) + 1;
+		isCompromised = false;
 
 		people = new Graph<Person>();
+	}
+	
+	public void populate(int size) {
 		List<String> takenNames = new ArrayList<String>();
 		for (int i = 0; i < size; i++) {
 			Person newPerson = new Person(PersonType.BASE);			
@@ -47,12 +55,26 @@ public class Organisation {
 					neighbourIndex = random.nextInt(personList.size());					
 				}
 
-				people.addConnection(people.getNode(p), people.getNode(personList.get(neighbourIndex)));
+				people.addConnection(p, personList.get(neighbourIndex));
 			}
 		}
 	}
+	
+	public void addPerson(Person p) {
+		people.add(p);
+	}
+	
+	public void addConnection(Person personA, Person personB) {
+		people.addConnection(personA, personB);
+	}
+	
+	public void setEntryPoint(Person p) {
+		people.setRootData(p);
+	}
 
 	public void update() {
+		people.updateEdges();
+		
 		for (Person p : people.getAll()) {
 			p.update();
 		}
@@ -68,7 +90,7 @@ public class Organisation {
 			p.print();
 		}
 
-		System.out.println();		
+		System.out.println();
 
 		for (Person p : people.getAll()) {
 			String outputString = p.getName() + " has ";
@@ -83,5 +105,34 @@ public class Organisation {
 			System.out.println(outputString.substring(0, outputString.length() -2));
 		}
 	}
+	
+	public void print(Person currentPerson) {
+		List<Person> reachablePeople = people.getReachable();
+		
+		for (Person p : people.getAll()) {
+			String outputString = (p.equals(currentPerson) ? "* " : "  ") + p.getName();
+			if (p.isCompromised()) {
+			outputString += " (compromised)"; 
+			}
+			if (!reachablePeople.contains(p)) {
+			outputString += " (unreachable)"; 
+			}
+			outputString += " has connections to: ";
 
+			for (Person neighbour : people.getNeighbours(p)) {
+				outputString += neighbour.getName() + ", ";
+			}
+			System.out.println(outputString.substring(0, outputString.length() -2));
+		}
+	
+		String outputString = "\nReachable people: ";
+		for (Person p : reachablePeople) {
+			outputString += p.getName() + ", ";
+		}
+		System.out.println(outputString.substring(0, outputString.length() -2));		
+	}
+	
+	// temp methods
+	public Graph<Person> getPersonGraph() { return people; }
+	public String getName() { return ""; }
 }

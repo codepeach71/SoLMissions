@@ -2,7 +2,7 @@ package sol.missions;
 
 import java.util.*;
 
-public class Graph<T> {
+public class Graph<T extends Compromisable> {
 	private Node<T> root;
 	private List<Node<T>> nodes;
 	private List<Edge> edges;
@@ -10,16 +10,12 @@ public class Graph<T> {
 	public Node<T> getRoot() { return root; }
 	public List<Node<T>> getNodes() { return nodes; }	
 	public T getIndex(int i) { return nodes.get(i).getData(); }
+	public void setRootData(T rootData) { root = new Node<T>(rootData); }
 		
 	public Graph() {
+		root = null;
 		nodes = new ArrayList<Node<T>>(); 
 		edges = new ArrayList<Edge>();		
-	}
-	
-	public Graph(T rootData) {
-		root = new Node<T>(rootData);
-		nodes = new ArrayList<Node<T>>(); 
-		edges = new ArrayList<Edge>();
 	}
 	
 	public void add(T data) {
@@ -27,15 +23,18 @@ public class Graph<T> {
 	}
 	
 	// this throws away duplicate connections
-	public void addConnection(Node<T> nodeA, Node<T> nodeB) {		
+	private void addConnection(Node<T> nodeA, Node<T> nodeB) {		
 		
 		for (Edge e : edges) {
-			Set<Node<T>> pair = e.getNodes();
-			if (pair.contains(nodeA) && pair.contains(nodeB)) {
+			if (e.contains(nodeA) && e.contains(nodeB)) {
 				return;
 			}
 		}
 		edges.add(new Edge(nodeA, nodeB));
+	}
+	
+	public void addConnection(T dataA, T dataB) {		
+		addConnection(new Node<T>(dataA), new Node<T>(dataB));
 	}
 	
 	public List<T> getAll() {
@@ -46,26 +45,40 @@ public class Graph<T> {
 		return dataList;
 	}	
 	
-	private boolean connected(Node<T> nodeA, Node<T> nodeB) {
-		Node<T> currentNode = nodeA;
+	public List<T> getReachable() {
+		List<T> reachable = new ArrayList<T>();
 		
+		List<Node<T>> visited = new ArrayList<Node<T>>();
+		Stack<Node<T>> toSearch = new Stack<Node<T>>();
 		
+		Node<T> currentNode;
+		toSearch.push(root);
+		//System.out.println(String.format("pushing %s", root.getData().getName()));
+		while (!toSearch.isEmpty()) {			
+			currentNode = toSearch.pop();
+			//System.out.println(String.format("popping %s", currentNode.getData().getName()));
+			
+			visited.add(currentNode);
+			reachable.add(currentNode.getData());
+			
+			List<Node<T>> neighbours = getReachableNeighbours(currentNode);			
+			for (Node<T> neighbour : neighbours) {
+				if (!visited.contains(neighbour)) {
+					toSearch.push(neighbour);
+					//System.out.println(String.format("pushing %s", neighbour.getData().getName()));					
+				}
+			}
+		}	
 		
-		
-		return false;
-	}
-	
-	private boolean connectedToRoot(Node<T> node) {
-		return connected(root, node);
+		return reachable;
 	}
 	
 	private boolean directlyConnected(Node<T> nodeA, Node<T> nodeB) {
 		for (Edge e : edges) {			
-			if (e.getNodes().contains(nodeA) && e.getNodes().contains(nodeB)) { 
+			if (e.contains(nodeA) && e.contains(nodeB)) { 
 				return true;
 			}
-		}
-		
+		}		
 		return false;
 	}
 	
@@ -85,12 +98,7 @@ public class Graph<T> {
 	public List<T> getNeighbours(Node<T> node) {
 		List<T> neighbours = new ArrayList<T>();
 		
-		for (Edge e : edges) {
-			/*
-			if (e.getNodes().contains(node)) {
-				neighbours.add(e.getOtherNode(node).getData());
-			}
-			*/
+		for (Edge e : edges) {			
 			for (Node<T> edgeNode : e.getNodes()) {
 				if (edgeNode.data.equals(node.data)) {
 					neighbours.add(e.getOtherNode(node).getData());
@@ -98,6 +106,20 @@ public class Graph<T> {
 			}
 		}
 		
+		
+		return neighbours;
+	}
+	
+	public List<Node<T>> getNeighbourNodes(Node<T> node) {
+		List<Node<T>> neighbours = new ArrayList<Node<T>>();
+		
+		for (Edge e : edges) {			
+			for (Node<T> edgeNode : e.getNodes()) {
+				if (edgeNode.data.equals(node.data)) {
+					neighbours.add(e.getOtherNode(node));
+				}
+			}
+		}		
 		
 		return neighbours;
 	}
@@ -110,15 +132,27 @@ public class Graph<T> {
 		List<Node<T>> reachableNeighbours = new ArrayList<Node<T>>();
 		
 		for (Edge e : edges) {			
-			if (e.isTraversable() && e.getNodes().contains(node)) {
+			if (e.isTraversable() && e.contains(node)) {
 				reachableNeighbours.add(e.getOtherNode(node));
 			}
 		}
 		
 		return reachableNeighbours;
 	}
+	
+	public void updateEdges() {
+		for (Node<T> node : nodes) {
+			if (node.getData().isCompromised()) {
+				for (Edge e : edges) {
+					if (e.contains(node)) {
+						e.setTraversable(true);
+					}
+				}
+			}
+		}
+	}
 		
-	public class Node<T> {
+	public class Node<T extends Compromisable> {
 		private T data;
 		
 		public Node(T data) {
@@ -142,23 +176,21 @@ public class Graph<T> {
 		public int hashCode() {
 			return data.hashCode();
 		}
-	}
+	}	
 	
 	private class Edge {
 		private Node<T> nodeA;
 		private Node<T> nodeB;
 		private Set<Node<T>> nodes;		
-		private boolean traversable;
-		private boolean visited;
+		private boolean traversable;		
 		
 		private Node<T> getNodeA() { return nodeA; }
 		private Node<T> getNodeB() { return nodeB; }
 		private Node<T> getOtherNode(Node<T> node) { return node.equals(nodeA) ? nodeB : nodeA; }
-		private Set<Node<T>> getNodes() { return nodes; }		
+		private Set<Node<T>> getNodes() { return nodes; }
+		private boolean contains(Node<T> node) { return nodes.contains(node); }
 		private boolean isTraversable() { return traversable; }
-		private boolean isVisited() { return visited; }		
 		private void setTraversable(boolean traversable) { this.traversable = traversable; }
-		private void setVisited(boolean visited) { this.visited = visited; }
 		 
 		private Edge(Node<T> nodeA, Node<T> nodeB) {
 			this.nodeA = nodeA;

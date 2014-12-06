@@ -1,7 +1,11 @@
-package sol.missions;
+package sol.missions.testing;
 
 import java.util.List;
 import java.util.Scanner;
+
+import sol.missions.Board;
+import sol.missions.Organisation;
+import sol.missions.Person;
 
 public class TestBoard {
 	private Board board;

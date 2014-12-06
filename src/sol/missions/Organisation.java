@@ -7,7 +7,7 @@ import java.util.Random;
 import sol.missions.Person.PersonType;
 
 public class Organisation implements Compromisable {
-	public enum organisationType { NORMAL, TElECOM, SECURITY }
+	public enum organisationType { NORMAL, TELECOM, SECURITY }
 
 	private String name;
 	private Graph<Person> people;

@@ -1,7 +1,5 @@
 package sol.missions;
 
-import java.util.Scanner;
-
 public class Board {
 	private Graph<Organisation> organisations;
 	private RollModifier modifiers;

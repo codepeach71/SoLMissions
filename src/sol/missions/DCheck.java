@@ -5,6 +5,10 @@ public final class DCheck {
 		
 	}
 	
+	public static boolean beatDC(int roll, int DC) {
+		return roll > DC;
+	}
+	
 	public static boolean isSuccessful(DiceBag d1, int DC){
 		return d1.rollDice() >= DC; 
 	}

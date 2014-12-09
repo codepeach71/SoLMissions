@@ -63,6 +63,8 @@ public class Person implements Compromisable {
 	
 	public boolean isCompromised() { return isCompromised; }
 	public void setCompromised(boolean compromised) { isCompromised = compromised; }
+	public boolean isCooperative() { return isCooperative(); }
+	public void setCooperative(boolean cooperative) { isCooperative = cooperative; }  
 	public boolean isDead() { return isDead; }
 	public void kill() { isDead = true; }
 	

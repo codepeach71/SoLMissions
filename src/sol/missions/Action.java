@@ -2,21 +2,24 @@ package sol.missions;
 
 public class Action {
 
+	private static Player player;
 	private Person thisPerson;	
-	private DiceBag bag = new DiceBag();
-
-	private boolean canBribe, canThreaten, canKidnap, canGetOut, canSecretPrison, canSniper, canPoison, canMug,
-					canFakeSuicide, canSmear, canDoSurveillance, canSearchHouse, canSearchPC, canTap, canBug,
-					canTail, canAskOnStreets, canSearchDB, canSearchSocialMedia = true;
-
+	
 	public Action(Person inPerson) {
 		thisPerson = inPerson;		
 	}
+	
+	public void setPlayer(Player p) {
+		player = p;
+	}
+	
+	public boolean canBribe() {
+		return player.getAvailableMoney() >= thisPerson.getBribeCost();		
+	}
 
 	public void bribe() {
-		if (canBribe) {
-			d20Bag(thisPerson.getModifiers().getManipulation());
-			if (DCheck.beatDC(bag, thisPerson.getStatMorality())) {
+		if (canBribe()) {
+			if (DCheck.beatDC(DiceBag.qRoll(1, 20, thisPerson.getModifiers().getManipulation()), thisPerson.getStatMorality())) {
 				thisPerson.updateStatusCompromised(20);
 			}
 			else {
@@ -24,11 +27,14 @@ public class Action {
 			}
 		}		
 	}
+	
+	public boolean canThreaten() {
+		return false;
+	}
 
 	public void threaten() {
-		if (canThreaten) {
-			d20Bag(thisPerson.getModifiers().getManipulation());
-			if (DCheck.beatDC(bag, thisPerson.getStatFortitude())) {
+		if (canThreaten()) {
+			if (DCheck.beatDC(DiceBag.qRoll(1, 20, thisPerson.getModifiers().getManipulation()), thisPerson.getStatFortitude())) {
 				thisPerson.updateStatusCompromised(20);
 			}
 			else {
@@ -42,9 +48,7 @@ public class Action {
 	}
 
 	public void getOutOfTown() {
-		if(canGetOut) {
-			
-		}
+
 	}
 
 	public void secretPrison() {
@@ -106,9 +110,4 @@ public class Action {
 	public void searchSocialMedia() {
 
 	}
-	
-	private void d20Bag(int modifier) {
-		bag.emptyDice();
-		bag.addDice(1, 20, modifier);
-	}	
 }

@@ -3,10 +3,19 @@ package sol.missions;
 public class Action {
 
 	private static Player player;
-	private Person thisPerson;	
+	private Person thisPerson;
+	
+	private boolean bribeSpecialEnabled;
+	private int bribeSpecialMod;
+	
+	public void setBribeSpecial(int mod, int costMoney, int costMedia) {
+		bribeSpecialEnabled = false;
+		bribeSpecialMod = mod;
+	}
 	
 	public Action(Person inPerson) {
 		thisPerson = inPerson;		
+		bribeSpecialEnabled = false;
 	}
 	
 	public void setPlayer(Player p) {

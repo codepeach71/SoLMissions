@@ -52,6 +52,15 @@ public class DiceBag {
 		return diceTotal;
 	}
 	
+	/* Return Multiple Rolls */
+	public List<Integer> rollMany(){
+		List<Integer> rollList = new ArrayList<Integer>();
+		for (Dice dice : diceList){
+			rollList.add(dice.roll());
+		}
+		return rollList;
+	}
+	
 	/* Toggle Verbose */
 	public void toggleVerbose(){
 		isVerbose = !isVerbose;

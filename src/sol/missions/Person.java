@@ -107,8 +107,10 @@ public class Person implements Compromisable {
 		miscInfo.put("lastName", lastNames[random.nextInt(lastNames.length)]);
 	}
 	
-	public void update() {
-		
+	public void update(RollModifier modChanges) {
+		modifiers.addChanges(modChanges);
+		modifiers.applyChanges();
+		modifiers.clearChanges();
 	}
 	
 	public String getName() {

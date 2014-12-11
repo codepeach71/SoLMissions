@@ -72,12 +72,15 @@ public class Organisation implements Compromisable {
 		people.setRootData(p);
 	}
 
-	public void update() {
+	public void update(RollModifier modChanges) {		
 		people.updateEdges();
 		
+		modifiers.addChanges(modChanges);
+		modifiers.applyChanges();		  
 		for (Person p : people.getAll()) {
-			p.update();
+			p.update(modifiers.getChanges());
 		}
+		modifiers.clearChanges();
 	}
 
 	public void print() {

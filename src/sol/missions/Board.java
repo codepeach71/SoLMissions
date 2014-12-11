@@ -23,7 +23,12 @@ public class Board {
 	
 	public void update() {
 		for (Organisation o : organisations.getAll()) {
-			o.update();
+			
+			modifiers.applyChanges();		  
+			for (Organisation org : organisations.getAll()) {
+				org.update(modifiers.getChanges());
+			}
+			modifiers.clearChanges();
 		}
 	}
 	

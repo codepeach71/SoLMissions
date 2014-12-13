@@ -2,6 +2,7 @@ package sol.missions;
 
 import java.util.*;
 
+
 public class Action {
 
 	private static Player player;
@@ -19,7 +20,6 @@ public class Action {
 	private Map<ActionType, Boolean> disabled;
 	private Map<ActionType, Integer> dangerRating;
 	
-	@SuppressWarnings("serial")
 	public Action(Person inPerson) {
 		thisPerson = inPerson;
 		
@@ -39,6 +39,7 @@ public class Action {
 		failurePenalties.put(ActionType.BRIBE, Arrays.asList(new ActionResult(RewardType.PARANOIA, 10)));
 		
 		// bribe special
+		disabled.put(ActionType.BRIBE_SPECIAL, true);
 		moneyCosts.put(ActionType.BRIBE_SPECIAL, 1000);
 		rewards.put(ActionType.BRIBE_SPECIAL, Arrays.asList(new ActionResult(RewardType.COMPROMISE, 20)));
 		failurePenalties.put(ActionType.BRIBE_SPECIAL, Arrays.asList(new ActionResult(RewardType.PARANOIA, 10)));
@@ -92,7 +93,7 @@ public class Action {
 	}
 	
 	public void setPlayer(Player p) {
-		player = p; // plz
+		player = p;
 	}
 	
 	/*
@@ -130,6 +131,9 @@ public class Action {
 			case OPSEC:
 				player.changeOPSEC(reward.value);
 				break;
+			case INFLUENCE:
+				thisPerson.updatestatusInfluence(reward.value);
+				break;
 			}
 		}
 	}
@@ -142,7 +146,7 @@ public class Action {
 		return !disabled.get(ActionType.BRIBE) && player.getAvailableMoney() >= moneyCosts.get(ActionType.BRIBE);		
 	}
 
-	public void bribe() {
+	/*public void bribe() {
 		if (canBribe()) {
 			if (DCheck.beatDC(DiceBag.qRoll(1, 20, thisPerson.getModifiers().getManipulation()), thisPerson.getStatMorality())) {
 				processResults(rewards.get(ActionType.BRIBE));
@@ -151,7 +155,9 @@ public class Action {
 				processResults(failurePenalties.get(ActionType.BRIBE));				
 			}
 		}		
-	}
+	}*/
+	
+	public void bribe()
 	
 	public boolean canThreaten() {
 		return !disabled.get(ActionType.THREATEN);

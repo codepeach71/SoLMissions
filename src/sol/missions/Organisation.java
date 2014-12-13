@@ -135,7 +135,20 @@ public class Organisation implements Compromisable {
 		System.out.println(outputString.substring(0, outputString.length() -2));		
 	}
 	
-	// temp methods
+	// TEMP
 	public Graph<Person> getPersonGraph() { return people; }
+	// TEMP
 	public String getName() { return ""; }
+	// TEMP 
+	public void printModsWithChildren() {
+		System.out.println(name);		
+		modifiers.printMods();
+		for (Person p : people.getAll()) {
+			p.printMods();
+		}
+	}
+	// TEMP
+	public void addModifier(int x) {
+		modifiers.updateGeneric(x);
+	}
 }

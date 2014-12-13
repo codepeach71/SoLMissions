@@ -3,12 +3,11 @@ package sol.missions;
 import java.util.*;
 
 public class RollModifier {
-	private Map<String, Integer> modMap = new HashMap<String, Integer>();
 	
 	private static enum modType { GENERIC, MANIPULATION, PHYSICAL_SECURITY, INTEL_ELECTRONIC, INTEL_OTHER, MORALITY, PUBLIC_PERCEPTION }
+	
 	private int[] mods = new int[modType.values().length];
 	private int[] changes = new int[mods.length];
-	
 	
 	public RollModifier(){
 		for (int i = 0; i < mods.length; i++) {
@@ -27,7 +26,7 @@ public class RollModifier {
 		}	
 	}
 	
-/* Accessors */	
+	/* Accessors */	
 	public int getGeneric(){ return mods[modType.GENERIC.ordinal()]; }	
 	public int getManipulation(){ return mods[modType.MANIPULATION.ordinal()]; }	
 	public int getPhysicalSecurity(){ return mods[modType.PHYSICAL_SECURITY.ordinal()]; }	
@@ -36,7 +35,7 @@ public class RollModifier {
 	public int getMorality(){ return mods[modType.MORALITY.ordinal()]; }
 	public int getPublicPerception(){ return mods[modType.PUBLIC_PERCEPTION.ordinal()]; }
 
-/* Mutators - Set */
+	/* Mutators - Set */
 	public void setGeneric(int x) { mods[modType.GENERIC.ordinal()] = x; } 
 	public void setManipulation(int x) { mods[modType.MANIPULATION.ordinal()] = x; }
 	public void setPhysicalSecurity(int x) { mods[modType.PHYSICAL_SECURITY.ordinal()] = x; }
@@ -46,16 +45,13 @@ public class RollModifier {
 	public void setPublicPerception(int x) { mods[modType.PUBLIC_PERCEPTION.ordinal()] = x; }
 	
 	/* Mutators - Update */
-	public void updateGeneric(int change) { 
-		mods[modType.GENERIC.ordinal()] += change;
-		changes[modType.GENERIC.ordinal()] += change;
-	} 
-	public void updateManipulation(int change) { mods[modType.MANIPULATION.ordinal()] += change; }
-	public void updatePhysicalSecurity(int change) { mods[modType.PHYSICAL_SECURITY.ordinal()] += change; }
-	public void updateElectronicIntel(int change) { mods[modType.INTEL_ELECTRONIC.ordinal()] += change; }			
-	public void updateIntelOther(int change) { mods[modType.INTEL_OTHER.ordinal()] += change; }
-	public void updateMorality(int change) { mods[modType.MORALITY.ordinal()] += change; }
-	public void updatePublicPerception(int change) { mods[modType.PUBLIC_PERCEPTION.ordinal()] += change; }
+	public void updateGeneric(int change) { changes[modType.GENERIC.ordinal()] += change; } 
+	public void updateManipulation(int change) { changes[modType.MANIPULATION.ordinal()] += change; }
+	public void updatePhysicalSecurity(int change) { changes[modType.PHYSICAL_SECURITY.ordinal()] += change; }
+	public void updateElectronicIntel(int change) { changes[modType.INTEL_ELECTRONIC.ordinal()] += change; }			
+	public void updateIntelOther(int change) { changes[modType.INTEL_OTHER.ordinal()] += change; }
+	public void updateMorality(int change) { changes[modType.MORALITY.ordinal()] += change; }
+	public void updatePublicPerception(int change) { changes[modType.PUBLIC_PERCEPTION.ordinal()] += change; }
 	
 	public void applyChanges() {
 		for (int i = 0; i < changes.length; i++) {
@@ -79,6 +75,12 @@ public class RollModifier {
 	
 	public void clearChanges() {
 		changes = new int[changes.length];		
+	}
+	
+	// TEMP
+	public void printMods() {
+		System.out.println("Mods:    " + Arrays.toString(mods));
+		System.out.println("Changes: " + Arrays.toString(changes) + "\n");		
 	}
 	
 	/* Add 2 RollModifiers */

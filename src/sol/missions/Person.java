@@ -124,6 +124,12 @@ public class Person implements Compromisable {
 	public void print() {
 		System.out.println(String.format("%s (Fortitude: %s, Instability: %s, Morality: %s)", getName(), statFortitude, statInstability, statMorality));
 	}
+
+	// TEMP
+	public void printMods() {
+		System.out.println(getName());
+		modifiers.printMods();
+	}
 	
     private int minMax(int value, int min, int max)
     {
@@ -134,6 +140,11 @@ public class Person implements Compromisable {
     {
         return minMax(value, 0, 100);
     }
+    
+	// TEMP
+	public void addModifier(int x) {
+		modifiers.updateGeneric(x);
+	}
 	
 	
 }

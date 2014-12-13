@@ -27,5 +27,5 @@ public class Player {
 	public int getTechnoBytes() { return technoBytes; }
 	public void changeTechnoBytes(int change) { technoBytes += change; }
 	public int getTechnoCred() { return technoCred; }
-	public void changeTechnoCred(int change) {	technoCred += change; }
+	public void changeTechnoCred(int change) {	technoCred += change; }	
 }

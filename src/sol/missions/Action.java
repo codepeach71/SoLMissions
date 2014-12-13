@@ -146,7 +146,7 @@ public class Action {
 		return !disabled.get(ActionType.BRIBE) && player.getAvailableMoney() >= moneyCosts.get(ActionType.BRIBE);		
 	}
 
-	/*public void bribe() {
+	public void bribe() {
 		if (canBribe()) {
 			if (DCheck.beatDC(DiceBag.qRoll(1, 20, thisPerson.getModifiers().getManipulation()), thisPerson.getStatMorality())) {
 				processResults(rewards.get(ActionType.BRIBE));
@@ -154,10 +154,8 @@ public class Action {
 			else {
 				processResults(failurePenalties.get(ActionType.BRIBE));				
 			}
-		}		
-	}*/
-	
-	public void bribe()
+		}
+	}
 	
 	public boolean canThreaten() {
 		return !disabled.get(ActionType.THREATEN);

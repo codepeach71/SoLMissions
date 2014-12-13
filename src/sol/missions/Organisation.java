@@ -21,7 +21,6 @@ public class Organisation implements Compromisable {
 	private final String[] lastNames = { "Corporation", "Corp.", "Incorporated", "Inc.", "R US", "of India" };
 	
 	public boolean isCompromised() { return isCompromised; }
-	
 
 	public Organisation() {
 		name = firstNames[random.nextInt(firstNames.length)] + " " + lastNames[random.nextInt(lastNames.length)];
@@ -32,6 +31,16 @@ public class Organisation implements Compromisable {
 
 		people = new Graph<Person>();
 	}
+	
+	public Organisation(Graph<Person> people) {
+		name = firstNames[random.nextInt(firstNames.length)] + " " + lastNames[random.nextInt(lastNames.length)];
+		type = organisationType.NORMAL;
+		modifiers = new RollModifier();
+		strength = random.nextInt(5) + 1;
+		isCompromised = false;
+		this.people = people;
+	}
+		
 	
 	public void populate(int size) {
 		List<String> takenNames = new ArrayList<String>();
@@ -150,5 +159,5 @@ public class Organisation implements Compromisable {
 	// TEMP
 	public void addModifier(int x) {
 		modifiers.updateGeneric(x);
-	}
+	}	
 }

@@ -2,14 +2,13 @@ package sol.missions.testing;
 
 import java.util.Random;
 
-import sol.missions.DiceBag;
-import sol.missions.Intel;
-import sol.missions.RollModifier;
+import sol.missions.*;
 
 public class Test {
 	private static Random random = new Random();
 	
 	public static void main(String[] args) {
+		testRandomOrganisation();
 	}
 	
 	public static void testRolls(){
@@ -43,6 +42,12 @@ public class Test {
 	public static void testBoard(){
 		TestBoard testBoard = new TestBoard();
 		testBoard.go();
+	}
+	
+	public static void testRandomOrganisation() {		
+		Board board = new Board();
+		Organisation org = board.generateOrganisation(0);
+		org.print();
 	}
 }
  

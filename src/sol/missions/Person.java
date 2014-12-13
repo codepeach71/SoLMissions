@@ -122,7 +122,8 @@ public class Person implements Compromisable {
 	}
 	
 	public void print() {
-		System.out.println(String.format("%s (Fortitude: %s, Instability: %s, Morality: %s)", getName(), statFortitude, statInstability, statMorality));
+		//System.out.println(String.format("%s (Fortitude: %d, Instability: %d, Morality: %d)", getName(), statFortitude, statInstability, statMorality));
+		System.out.println(String.format("%s (influence: %d)", getName(), statusInfluence));		
 	}
 
 	// TEMP
